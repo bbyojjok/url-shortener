@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const HeaderBlock = styled.header`
   position: relative;
@@ -203,6 +204,20 @@ const NavList = styled.div`
 `;
 
 const Header = () => {
+  const [navListArr] = useState<Array<{ href: string; name: string }>>([
+    {
+      href: '/',
+      name: 'Home',
+    },
+    {
+      href: '/stat',
+      name: 'Stat',
+    },
+    {
+      href: '/docs',
+      name: 'Docs',
+    },
+  ]);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -245,27 +260,17 @@ const Header = () => {
       <NavList className="nav-list start end">
         <div className="nav-list-inner">
           <ul>
-            <li>
-              <span>
-                <a href="/" onClick={navMove}>
-                  Home
-                </a>
-              </span>
-            </li>
-            <li>
-              <span>
-                <a href="/stat" onClick={navMove}>
-                  Stat
-                </a>
-              </span>
-            </li>
-            <li>
-              <span>
-                <a href="/docs" onClick={navMove}>
-                  Docs
-                </a>
-              </span>
-            </li>
+            {navListArr.map((v) => {
+              return (
+                <li key={v.name}>
+                  <span>
+                    <a href={v.href} onClick={navMove}>
+                      {v.name}
+                    </a>
+                  </span>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </NavList>
