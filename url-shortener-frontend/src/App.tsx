@@ -5,59 +5,6 @@ import DocsPage from './pages/DocsPage';
 
 import './App.css';
 
-const Header = () => {
-  const menuOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    const menuDom = document.querySelector<HTMLElement>('header .menu');
-    menuDom?.classList.toggle('active');
-
-    const menuContentDom = document.querySelector<HTMLElement>('.menu-content');
-    menuContentDom?.classList.toggle('active');
-    menuContentDom?.classList.remove('start');
-    menuContentDom?.classList.toggle('end');
-  };
-
-  return (
-    <header>
-      <h1>
-        <a href="/">URL-SHORTENER</a>
-      </h1>
-      <button className="menu" onClick={menuOnClick}>
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <div className="menu-content start end">
-        <div className="menu-content-inner">
-          <ul>
-            <li className="active">
-              <span>
-                <a href="#none">Home</a>
-              </span>
-            </li>
-            <li>
-              <span>
-                <a href="#none">Stat</a>
-              </span>
-            </li>
-            <li>
-              <span>
-                <a href="#none">Docs</a>
-              </span>
-            </li>
-            <li>
-              <span>
-                <a href="#none">또 필요한 페이지는?..</a>
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </header>
-  );
-};
-
 const Contents = () => {
   return (
     <div id="contents">
@@ -90,7 +37,6 @@ const Contents = () => {
 const Wrap = () => {
   return (
     <div id="wrap">
-      <Header />
       <Contents />
     </div>
   );

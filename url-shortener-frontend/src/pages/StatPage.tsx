@@ -1,7 +1,18 @@
+import Header from '../components/Header';
+
 const StatPage = () => {
   return (
     <div>
-      <p>Stat page component</p>
+      <Header />
+      <p>
+        Stat <br />
+        Stat <br />
+        Stat <br />
+        Stat <br />
+        Stat <br />
+        Stat <br />
+        page component dddd
+      </p>
     </div>
   );
 };
