@@ -97,7 +97,7 @@ const NavList = styled.div`
     height: 100vh;
     background: rgba(234, 234, 234, 0.7);
     z-index: -1;
-    transition: transform cubic-bezier(0.77, 0, 0.175, 1) 0.6s;
+    transition: transform cubic-bezier(0.77, 0, 0.175, 1) 0.4s;
     transform: translateX(0%) translateY(-100%);
   }
   &:before {
@@ -112,7 +112,7 @@ const NavList = styled.div`
     visibility: hidden;
   }
   &.end {
-    animation: 0s linear 0.8s forwards delayedHidden;
+    animation: 0s linear 0.5s forwards delayedHidden;
   }
   &.active {
     visibility: visible;
@@ -138,10 +138,10 @@ const NavList = styled.div`
 
     ul li {
       margin-top: 30px;
-      transition-delay: 0.6s;
+      transition-delay: 0.4s;
       opacity: 0;
       transform: translate(0%, 100%);
-      transition: opacity 0.2s ease, transform 0.3s ease;
+      transition: opacity 0.15s ease, transform 0.25s ease;
 
       &:first-child {
         margin-top: 0;
@@ -180,19 +180,19 @@ const NavList = styled.div`
   &.active .nav-list-inner ul li {
     opacity: 1;
     transform: translateX(0%);
-    transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
 
     &:nth-child(1) {
-      transition-delay: 0.4s;
+      transition-delay: 0.3s;
     }
     &:nth-child(2) {
-      transition-delay: 0.5s;
+      transition-delay: 0.4s;
     }
     &:nth-child(3) {
-      transition-delay: 0.6s;
+      transition-delay: 0.5s;
     }
     &:nth-child(4) {
-      transition-delay: 0.7s;
+      transition-delay: 0.6s;
     }
   }
 
@@ -244,7 +244,7 @@ const Header = () => {
       if (url) {
         navigate(url);
       }
-    }, 800);
+    }, 400);
   };
 
   return (

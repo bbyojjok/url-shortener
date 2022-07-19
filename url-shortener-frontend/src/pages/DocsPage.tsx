@@ -1,9 +1,8 @@
-import Header from '../components/Header';
+import Wrapper from '../components/Wrapper';
 
 const DocsPage = () => {
   return (
-    <div>
-      <Header />
+    <Wrapper>
       <p>
         Docs <br />
         Docs <br />
@@ -19,7 +18,7 @@ const DocsPage = () => {
         Docs <br />
         page component
       </p>
-    </div>
+    </Wrapper>
   );
 };
 

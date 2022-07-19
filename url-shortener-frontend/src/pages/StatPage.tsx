@@ -1,9 +1,9 @@
-import Header from '../components/Header';
+import Wrapper from '../components/Wrapper';
 
 const StatPage = () => {
   return (
-    <div>
-      <Header />
+    <Wrapper>
+      {/* <div> */}
       <p>
         Stat <br />
         Stat <br />
@@ -13,7 +13,7 @@ const StatPage = () => {
         Stat <br />
         page component dddd
       </p>
-    </div>
+    </Wrapper>
   );
 };
 
