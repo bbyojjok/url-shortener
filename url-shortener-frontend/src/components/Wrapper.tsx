@@ -9,7 +9,7 @@ const WrapperBlock = styled.div`
   position: absolute;
   left: 0;
   right: 0;
-  padding: 20px;
+  padding: 20px 20px 40px;
 `;
 
 const Wrapper: React.FC<WrapperProps> = ({ children }) => {

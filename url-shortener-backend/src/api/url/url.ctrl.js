@@ -4,31 +4,33 @@ import QRCode from 'qrcode';
 import Url from '../../models/url.js';
 
 /* 단축 url 리다이렉트
-GET /api/:urlCode
+GET /:urlCode
 */
 export const redirect = async (ctx) => {
   const { urlCode } = ctx.request.params;
   console.log('# urlCode:', urlCode);
 
-  const queryResult = await Url.findOne({ urlCode }, (err) => {
-    if (err) {
-      ctx.status = 401;
-      ctx.body = `DB Error: ${err}`;
-      return;
-    }
-  });
-  if (queryResult) {
-    const count = queryResult.count + 1;
-    try {
-      const updateResult = await Url.findOneAndUpdate(
-        { urlCode },
-        { $set: { count } },
-        { new: true },
-      );
-      ctx.body = updateResult;
-    } catch (e) {
-      throw (500, e);
-    }
+  if (urlCode === undefined) {
+    return ctx.redirect('http://localhost:3000/');
+  }
+
+  const queryResult = await Url.findOne({ urlCode });
+  if (!queryResult) {
+    ctx.status = 404;
+    return ctx.redirect('http://localhost:3000/error');
+  }
+  console.log('# queryResult:', queryResult);
+
+  const count = queryResult.count + 1;
+  try {
+    const updateResult = await Url.findOneAndUpdate(
+      { urlCode },
+      { $set: { count } },
+      { new: true },
+    );
+    return ctx.redirect(updateResult.originalUrl);
+  } catch (e) {
+    throw (500, e);
   }
 };
 
@@ -54,16 +56,16 @@ export const create = async (ctx) => {
 
   // db 로직
   // db에 originalUrl이 존재하는지 확인
-  const hasUrl = await Url.findOne({ originalUrl });
-  if (hasUrl) {
-    ctx.body = hasUrl;
+  const existUrl = await Url.findOne({ originalUrl }).exec();
+  if (existUrl) {
+    ctx.body = existUrl;
     return;
   }
 
   const shortBaseUrl = `${ctx.request.origin}/`;
   const urlCode = nanoid(10);
-  const shortUrl = hasUrl
-    ? shortBaseUrl + hasUrl.urlCode
+  const shortUrl = existUrl
+    ? shortBaseUrl + existUrl.urlCode
     : shortBaseUrl + urlCode;
   const qrCode = QRCode.toString(shortUrl, { type: 'svg' }, (err) => {
     if (err) throw err;
@@ -80,15 +82,41 @@ export const create = async (ctx) => {
 };
 
 /* 단축 url 찾기
-GET /api/find/
+GET /api/url/
+GET /api/url/?limit=20&sort_bt=count
+GET /api/url/:urlCode
 */
-export const find = async (ctx) => {
-  ctx.body = 'find !';
-};
+export const read = async (ctx) => {
+  const { urlCode } = ctx.request.params;
 
-/* 단축 url 통계
-GET /api/stat/:urlCode
-*/
-export const stat = async (ctx) => {
-  ctx.body = 'stat !';
+  if (urlCode) {
+    try {
+      const queryResult = await Url.findOne({ urlCode }).exec();
+      if (!queryResult) {
+        ctx.status = 404;
+        return;
+      }
+      ctx.body = queryResult;
+    } catch (e) {
+      ctx.throw(500, e);
+    }
+  } else {
+    const { limit, sort_by } = ctx.request.query;
+    const sort = {};
+    if (sort_by === 'count') sort.count = -1;
+    sort._id = -1;
+
+    try {
+      const queryResult = await Url.find({})
+        .sort(sort)
+        .limit(parseInt(limit, 10) || 10);
+      if (!queryResult) {
+        ctx.status = 404;
+        return;
+      }
+      ctx.body = queryResult;
+    } catch (e) {
+      ctx.throw(500, e);
+    }
+  }
 };

@@ -65,7 +65,7 @@ const GlobalStyle = createGlobalStyle`${css`
   h5,
   h6 {
     font-weight: normal;
-    font-size: 1em;
+    font-size: 1rem;
   }
   ol,
   ul {

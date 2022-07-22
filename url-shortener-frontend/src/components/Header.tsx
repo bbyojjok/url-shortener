@@ -8,8 +8,8 @@ const HeaderBlock = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
   padding: 0 50px;
+  height: 50px;
   box-shadow: 0px 0px 5px 0px #0b1d31;
   background-color: #112d4e;
 
@@ -18,7 +18,7 @@ const HeaderBlock = styled.header`
 
     a {
       font-size: 16px;
-      font-weight: 400;
+      font-weight: 600;
       color: #fff;
     }
   }
@@ -93,10 +93,10 @@ const NavList = styled.div`
   &:after {
     content: '';
     position: fixed;
+    z-index: -1;
     width: 100vw;
     height: 100vh;
     background: rgba(234, 234, 234, 0.7);
-    z-index: -1;
     transition: transform cubic-bezier(0.77, 0, 0.175, 1) 0.4s;
     transform: translateX(0%) translateY(-100%);
   }
@@ -132,14 +132,14 @@ const NavList = styled.div`
   .nav-list-inner {
     position: fixed;
     top: 50%;
-    transform: translate(0%, -50%);
     width: 100%;
     text-align: center;
+    transform: translate(0%, -50%);
 
     ul li {
       margin-top: 30px;
-      transition-delay: 0.4s;
       opacity: 0;
+      transition-delay: 0.4s;
       transform: translate(0%, 100%);
       transition: opacity 0.15s ease, transform 0.25s ease;
 
@@ -172,7 +172,10 @@ const NavList = styled.div`
     }
   }
 
-  .nav-list-inner ul li.active span:before,
+  .nav-list-inner ul li.current span:before {
+    background: #112d4e;
+    width: 100%;
+  }
   .nav-list-inner ul li:hover span:before {
     width: 100%;
   }
@@ -205,18 +208,9 @@ const NavList = styled.div`
 
 const Header = () => {
   const [navListArr] = useState<Array<{ href: string; name: string }>>([
-    {
-      href: '/',
-      name: 'Home',
-    },
-    {
-      href: '/stat',
-      name: 'Stat',
-    },
-    {
-      href: '/docs',
-      name: 'Docs',
-    },
+    { href: '/', name: 'Home' },
+    { href: '/stat', name: 'Stat' },
+    { href: '/docs', name: 'Docs' },
   ]);
   const navigate = useNavigate();
 

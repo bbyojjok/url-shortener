@@ -6,22 +6,30 @@ type ButtonProps = {
   children: React.ReactNode;
   to?: string;
   fullWidth?: boolean;
+  onClick?: () => void;
 };
 
 const buttonStyle = css`
+  display: inline-block;
   border: none;
   border-radius: 4px;
   font-size: 1rem;
-  font-weight: bold;
-  padding: 0.25rem 1rem;
+  padding: 0.5rem 1rem;
   color: white;
   outline: none;
   cursor: pointer;
   text-align: center;
+  background: #3f72af;
+  transition: all 0.2s;
 
-  background: #333;
+  ${(props: ButtonProps) =>
+    props.fullWidth &&
+    css`
+      width: 100%;
+    `}
+
   &:hover {
-    background: #444;
+    background: #295b99;
   }
 `;
 
