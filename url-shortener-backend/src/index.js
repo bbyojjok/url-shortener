@@ -6,6 +6,7 @@ import bodyParser from 'koa-bodyparser';
 import mongoose from 'mongoose';
 import path from 'path';
 import send from 'koa-send';
+import serve from 'koa-static';
 
 import api from './api/index.js';
 import { redirect } from './api/index.js';
@@ -23,10 +24,15 @@ mongoose
 
 const app = new Koa();
 const router = new Router();
+const __dirname = path.resolve();
+const buildDirectory = path.resolve(
+  __dirname,
+  '../url-shortener-frontend/build',
+);
 
 // 라우터 설정
-// router.use('/:urlCode?', redirect.routes());
-router.use('/api', api.routes());
+router.use('/api', api.routes()); // api 라우트 적용
+router.use('/redirect/:urlCode?', redirect.routes()); // redirect 라우트 적용
 
 // 라우트 적용 전에 bodyParser 적용
 app.use(bodyParser());
@@ -34,18 +40,21 @@ app.use(bodyParser());
 // app 인스턴스에 라우터 적용
 app.use(router.routes()).use(router.allowedMethods());
 
-const __dirname = path.resolve();
-const buildDirectory = path.resolve(
-  __dirname,
-  '../url-shortener-frontend/build',
-);
-console.log(__dirname);
-console.log(buildDirectory);
+// 정적파일 위치 지정
+app.use(serve(buildDirectory));
 app.use(async (ctx) => {
-  console.log('ctx.path:', ctx.path);
-  // Not Found이고, 주소가 /api로 시작하지 않는 경우
-  if (ctx.status === 404 && ctx.path.indexOf('/api') !== 0) {
+  // Not Found이고, 주소가 /api/url로 시작하지 않거나, /stat /docs /error 일 경우
+  if (
+    ctx.status === 404 &&
+    (ctx.path.indexOf('/api/url') === 0 ||
+      ctx.path === '/stat' ||
+      ctx.path === '/docs' ||
+      ctx.path === '/error')
+  ) {
     await send(ctx, 'index.html', { root: buildDirectory });
+  } else {
+    // 리다이렉트 시키기
+    return ctx.redirect(`/redirect${ctx.path}`);
   }
 });
 

@@ -8,16 +8,16 @@ GET /:urlCode
 */
 export const redirect = async (ctx) => {
   const { urlCode } = ctx.request.params;
-  console.log('# urlCode:', urlCode);
+  console.log('####### urlCode:', urlCode);
 
   if (urlCode === undefined) {
-    return ctx.redirect('http://localhost:3000/');
+    return ctx.redirect('/');
   }
 
   const queryResult = await Url.findOne({ urlCode });
   if (!queryResult) {
     ctx.status = 404;
-    return ctx.redirect('http://localhost:3000/error');
+    return ctx.redirect('/error');
   }
   console.log('# queryResult:', queryResult);
 
