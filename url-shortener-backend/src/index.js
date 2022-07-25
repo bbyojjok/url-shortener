@@ -9,7 +9,6 @@ import send from 'koa-send';
 import serve from 'koa-static';
 
 import api from './api/index.js';
-import { redirect } from './api/index.js';
 
 const { PORT, MONGO_URI } = process.env;
 
@@ -32,7 +31,6 @@ const buildDirectory = path.resolve(
 
 // 라우터 설정
 router.use('/api', api.routes()); // api 라우트 적용
-router.use('/redirect/:urlCode?', redirect.routes()); // redirect 라우트 적용
 
 // 라우트 적용 전에 bodyParser 적용
 app.use(bodyParser());
@@ -43,6 +41,8 @@ app.use(router.routes()).use(router.allowedMethods());
 // 정적파일 위치 지정
 app.use(serve(buildDirectory));
 app.use(async (ctx) => {
+  console.log('#ctx.path:', ctx.path);
+
   // Not Found이고, 주소가 /api/url로 시작하지 않거나, /stat /docs /error 일 경우
   if (
     ctx.status === 404 &&
@@ -54,7 +54,7 @@ app.use(async (ctx) => {
     await send(ctx, 'index.html', { root: buildDirectory });
   } else {
     // 리다이렉트 시키기
-    return ctx.redirect(`/redirect${ctx.path}`);
+    return ctx.redirect(`/api/redirect${ctx.path}`);
   }
 });
 

@@ -1,12 +1,9 @@
 import Router from 'koa-router';
 import url from './url/index.js';
-import * as urlCtrl from './url/url.ctrl.js';
+import redirect from './redirect/index.js';
 
 const api = new Router();
 api.use('/url', url.routes());
-
-export const redirect = new Router();
-redirect.get('/:urlCode?', urlCtrl.redirect);
-redirect.use('/:urlCode?', redirect.routes());
+api.use('/redirect', redirect.routes());
 
 export default api;
