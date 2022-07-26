@@ -29,11 +29,11 @@ const buildDirectory = path.resolve(
   '../url-shortener-frontend/build',
 );
 
-// 라우터 설정
-router.use('/api', api.routes()); // api 라우트 적용
-
 // 라우트 적용 전에 bodyParser 적용
 app.use(bodyParser());
+
+// 라우터 설정
+router.use('/api', api.routes()); // api 라우트 적용
 
 // app 인스턴스에 라우터 적용
 app.use(router.routes()).use(router.allowedMethods());
@@ -41,8 +41,6 @@ app.use(router.routes()).use(router.allowedMethods());
 // 정적파일 위치 지정
 app.use(serve(buildDirectory));
 app.use(async (ctx) => {
-  console.log('#ctx.path:', ctx.path);
-
   // Not Found이고, 주소가 /api/url로 시작하지 않거나, /stat /docs /error 일 경우
   if (
     ctx.status === 404 &&
