@@ -18,11 +18,11 @@ export function* urlSaga() {
 
 type initialStateType = {
   shortUrl: any;
-  error: any;
+  shortUrlError: any;
 };
 const initialState: initialStateType = {
   shortUrl: null,
-  error: null,
+  shortUrlError: null,
 };
 
 const url = handleActions(
@@ -31,7 +31,7 @@ const url = handleActions(
       ...state,
       shortUrl: shortUrl.data,
     }),
-    [CREATE_URL_FAILURE]: (state: any, { payload: error }) => ({ ...state, error }),
+    [CREATE_URL_FAILURE]: (state: any, { payload: shortUrlError }) => ({ ...state, shortUrlError }),
     [UNLOAD_URL]: () => initialState,
   },
   initialState,

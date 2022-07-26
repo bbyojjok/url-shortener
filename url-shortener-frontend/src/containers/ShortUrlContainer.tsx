@@ -1,34 +1,14 @@
-import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import styled, { css } from 'styled-components';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../components/Button';
 import { createUrl, unloadUrl } from '../modules/url';
 import { RootState } from '../modules/url';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-const InputBlock = styled.div`
-  box-sizing: border-box;
-  margin: 0 0 15px 0;
-  border: 1px solid #333;
-  border-radius: 4px;
-
-  input {
-    box-sizing: border-box;
-    padding: 10px;
-    width: 100%;
-    height: 100%;
-    font-size: 14px;
-    color: #666;
-    border: 0;
-    border-radius: 4px;
-  }
-`;
-
-const CreatedUrlBlock = styled.div`
-  padding: 30px 0;
-  text-align: center;
+const SmoothAnimation = css`
   animation-name: smooth;
-  animation-duration: 0.3s;
+  animation-duration: 0.2s;
   animation-iteration-count: 1;
 
   @keyframes smooth {
@@ -41,6 +21,45 @@ const CreatedUrlBlock = styled.div`
       transform: translateY(0);
     }
   }
+`;
+
+const InputBlock = styled.div`
+  box-sizing: border-box;
+  border: 1px solid #333;
+  border-radius: 4px;
+  transition: all 0.2s;
+
+  input {
+    box-sizing: border-box;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    color: #666;
+    border: 0;
+    border-radius: 4px;
+  }
+
+  &.error {
+    border: 1px solid #ce2c2c;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  color: #ce2c2c;
+  font-size: 12px;
+  padding: 5px 10px 15px;
+  ${SmoothAnimation}
+`;
+
+const ButtonBoxBlock = styled(Button)`
+  margin-top: 15px;
+`;
+
+const CreatedUrlBlock = styled.div`
+  padding: 30px 0;
+  text-align: center;
+  ${SmoothAnimation}
 
   .short-url {
     display: inline-block;
@@ -100,75 +119,100 @@ const CreatedUrlBlock = styled.div`
 `;
 
 const ShortUrlContainer = () => {
+  const [error, setError] = useState<string | null>(null);
   const [urlInput, setUrlInput] = useState<string>('');
   const [copyShortUrl, setCopyShortUrl] = useState<{ value: string; copied: boolean }>({
     value: '',
     copied: false,
   });
   const dispatch = useDispatch();
-  const url = useSelector((state: RootState) => state.url.shortUrl);
+  const { shortUrl, shortUrlError } = useSelector(({ url }: RootState) => ({
+    shortUrl: url.shortUrl,
+    shortUrlError: url.shortUrlError,
+  }));
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUrlInput(e.target.value);
   };
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onShorten();
+    }
+  };
+
   const onShorten = () => {
+    if (urlInput === '') {
+      setError('Error: Paste link or url to input');
+      return;
+    }
+
     setCopyShortUrl((state) => ({
       ...state,
       copied: false,
     }));
     dispatch(createUrl(urlInput));
-
-    // TODO 예외처리
   };
 
   const onCopy = () => {
     setCopyShortUrl(() => ({
-      value: url.shortUrl,
+      value: shortUrl.shortUrl,
       copied: true,
     }));
   };
 
+  // 페이지 떠날때 shortUrl 값 초기화
   useEffect(() => {
     return () => {
-      console.log('컴포넌트 제거시 unloadUrl() 호출');
       dispatch(unloadUrl());
     };
   }, [dispatch]);
 
+  // shortUrl이 있을 경우 error값에 null 대입
   useEffect(() => {
-    console.log('copyShortUrl.copied:', copyShortUrl.copied);
-  }, [copyShortUrl]);
+    if (shortUrl) {
+      setError(null);
+    }
+  }, [shortUrl]);
+
+  // shortUrlError 처리
+  useEffect(() => {
+    console.log('# shortUrlError:', shortUrlError);
+    if (shortUrlError?.response.status === 400) {
+      setError('Error: Invalid url');
+    }
+  }, [shortUrlError]);
 
   return (
     <>
-      [TODO] 로딩처리, 유효성검사 및 에러안내, 인풋에 엔터 적용
-      <InputBlock>
+      <InputBlock className={`${error && 'error'}`}>
         <input
           type="text"
           onChange={onChange}
+          onKeyDown={onKeyDown}
           value={urlInput}
           placeholder="Paste link or url to input"
           autoComplete="off"
         />
       </InputBlock>
-      <Button fullWidth onClick={onShorten}>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      <ButtonBoxBlock fullWidth onClick={onShorten}>
         Shorten
-      </Button>
-      {url && (
+      </ButtonBoxBlock>
+      {shortUrl && (
         <CreatedUrlBlock>
           <a
             className={`short-url ${copyShortUrl.copied && 'copied'}`}
-            href={url.shortUrl}
+            href={shortUrl.shortUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span>{url.shortUrl}</span>
+            <span>{shortUrl.shortUrl}</span>
           </a>
-          <CopyToClipboard text={url.shortUrl} onCopy={onCopy}>
+          <CopyToClipboard text={shortUrl.shortUrl} onCopy={onCopy}>
             <Button>Copy</Button>
           </CopyToClipboard>
-          <div className="qr-code-box" dangerouslySetInnerHTML={{ __html: url.qrCode }}></div>
+          <div className="qr-code-box" dangerouslySetInnerHTML={{ __html: shortUrl.qrCode }}></div>
         </CreatedUrlBlock>
       )}
     </>

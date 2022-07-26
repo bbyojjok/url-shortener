@@ -22,18 +22,9 @@ const StatContainer = () => {
 
   useEffect(() => {
     return () => {
-      console.log('컴포넌트 제거시 unloadUrl() 호출');
       dispatch(unloadFind());
     };
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log('stat:', stat);
-  }, [stat]);
-
-  useEffect(() => {
-    console.log('findInput:', findInput);
-  }, [findInput]);
 
   return (
     <StatContainerBlock>
