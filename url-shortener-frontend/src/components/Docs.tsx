@@ -62,12 +62,12 @@ const Docs = () => {
     return: `
     [
       {
-        "_id": "5b74cec52454b25a6c16f39a",
+        "_id": "62baad2ae4a2b7b1309f640d",
         "originalUrl": "https://example.com",
-        "urlCode": "23TplPdS",
-        "shortUrl": "${domainUrl}/23TplPdS",
+        "urlCode": "Q50Ug2xish",
+        "shortUrl": "${domainUrl}/Q50Ug2xish",
         "count": 0,
-        "createdAt": "2018-08-16T10:06:54.033Z",
+        "createdAt": "2022-07-22T02:12:16.808+00:00",
         "qrCode": svg tag
       }
     ]

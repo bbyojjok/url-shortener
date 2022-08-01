@@ -9,6 +9,7 @@ import { applyMiddleware, legacy_createStore as createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer, { rootSaga } from './modules';
+import { HelmetProvider } from 'react-helmet-async';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
@@ -19,8 +20,10 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <GlobalStyle />
-      <App />
+      <HelmetProvider>
+        <GlobalStyle />
+        <App />
+      </HelmetProvider>
     </BrowserRouter>
   </Provider>,
 );

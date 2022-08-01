@@ -17,11 +17,11 @@ export function* statSaga() {
 
 type initialStateType = {
   stat: any;
-  error: any;
+  statError: any;
 };
 const initialState: initialStateType = {
   stat: null,
-  error: null,
+  statError: null,
 };
 
 const stat = handleActions(
@@ -30,7 +30,7 @@ const stat = handleActions(
       ...state,
       stat: stat.data,
     }),
-    [FIND_URL_FAILURE]: (state: any, { payload: error }) => ({ ...state, error }),
+    [FIND_URL_FAILURE]: (state: any, { payload: statError }) => ({ ...state, statError }),
     [UNLOAD_FIND]: () => initialState,
   },
   initialState,

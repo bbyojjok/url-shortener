@@ -2,13 +2,6 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-type ButtonProps = {
-  children: React.ReactNode;
-  to?: string;
-  fullWidth?: boolean;
-  onClick?: () => void;
-};
-
 const buttonStyle = css`
   display: inline-block;
   border: none;
@@ -28,6 +21,12 @@ const buttonStyle = css`
       width: 100%;
     `}
 
+  ${(props: ButtonProps) =>
+    props.maxWidth &&
+    css`
+      max-width: ${props.maxWidth}px;
+    `}
+
   &:hover {
     background: #295b99;
   }
@@ -40,6 +39,14 @@ const StyledButton = styled.button`
 const StyledLink = styled(Link)`
   ${buttonStyle}
 `;
+
+type ButtonProps = {
+  children: React.ReactNode;
+  to?: string;
+  fullWidth?: boolean;
+  maxWidth?: number;
+  onClick?: () => void;
+};
 
 const Button: React.FC<ButtonProps> = (props) => {
   return props.to ? (
