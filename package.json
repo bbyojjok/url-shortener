@@ -3,13 +3,7 @@
     "node": "16.14.2",
     "npm": "8.5.0"
   },
-  "workspaces": [
-    "url-shortener-backend",
-    "url-shortener-frontend"
-  ],
   "scripts": {
-    "backend": "yarn workspace url-shortener-backend start:dev",
-    "frontend": "yarn workspace url-shortener-frontend build",
     "start": "cd url-shortener-backend && npm run start"
   }
 }
