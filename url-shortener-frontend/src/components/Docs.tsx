@@ -52,7 +52,7 @@ const DocsSectionBlock = styled.div`
 `;
 
 const Docs = () => {
-  const domainUrl = 'https://url.leest.kr';
+  const domainUrl = window.location.origin;
   const preCode = {
     data: `
     {
