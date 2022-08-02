@@ -4,6 +4,7 @@
     "npm": "8.5.0"
   },
   "scripts": {
-    "start": "cd url-shortener-backend && npm run start"
+    "start": "cd url-shortener-backend && npm run start",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix url-shortener-backend && npm install --prefix url-shortener-frontend && npm run build --prefix url-shortener-frontend"
   }
 }
