@@ -1,0 +1,16 @@
+{
+  "engine": {
+    "node": "16.14.2",
+    "npm": "8.5.0"
+  },
+  "workspaces": [
+    "url-shortener-backend",
+    "url-shortener-frontend"
+  ],
+  "scripts": {
+    "backend": "yarn workspace url-shortener-backend start:dev",
+    "frontend": "yarn workspace url-shortener-frontend build",
+    "start": "cd url-shortener-backend && yarn run start",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix url-shortener-frontend && npm run build --prefix url-shortener-frontend"
+  }
+}
