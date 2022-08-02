@@ -42,18 +42,18 @@ app.use(router.routes()).use(router.allowedMethods());
 app.use(serve(buildDirectory));
 app.use(async (ctx) => {
   // Not Found이고, 주소가 /api/url로 시작하지 않거나, /stat /docs /error 일 경우
-  if (
-    ctx.status === 404 &&
-    (ctx.path.indexOf('/api/url') === 0 ||
-      ctx.path === '/stat' ||
-      ctx.path === '/docs' ||
-      ctx.path === '/error')
-  ) {
-    await send(ctx, 'index.html', { root: buildDirectory });
-  } else {
-    // 리다이렉트 시키기
-    return ctx.redirect(`/api/redirect${ctx.path}`);
-  }
+  // if (
+  //   ctx.status === 404 &&
+  //   (ctx.path.indexOf('/api/url') === 0 ||
+  //     ctx.path === '/stat' ||
+  //     ctx.path === '/docs' ||
+  //     ctx.path === '/error')
+  // ) {
+  //   await send(ctx, 'index.html', { root: buildDirectory });
+  // } else {
+  //   // 리다이렉트 시키기
+  //   return ctx.redirect(`/api/redirect${ctx.path}`);
+  // }
 });
 
 const port = PORT || 4000;
