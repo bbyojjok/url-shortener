@@ -32,7 +32,7 @@ const StatFindBox: React.FC<StatFindBoxProps> = ({
   return (
     <StatFindBoxBlock>
       <div>
-        <span>{window.location.origin}</span>
+        <span>{`${window.location.origin}/`}</span>
         <InputBox
           error={error}
           value={findInput}
