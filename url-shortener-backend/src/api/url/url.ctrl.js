@@ -31,13 +31,7 @@ export const create = async (ctx) => {
     return;
   }
 
-  console.log('ctx.request:', ctx.request);
-  console.log('ctx.request.header.origin:', ctx.request.header.origin);
-  console.log('ctx.request.origin:', ctx.request.origin);
-
-  const shortBaseUrl = `${ctx.request.origin}/`;
-  console.log('shortBaseUrl:', shortBaseUrl);
-
+  const shortBaseUrl = `${ctx.request.header.origin}/`;
   const urlCode = nanoid(10);
   const shortUrl = existUrl
     ? shortBaseUrl + existUrl.urlCode
