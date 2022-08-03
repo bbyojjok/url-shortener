@@ -1,4 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
+import rootReducer from '.';
 
 const START_LOADING = 'loading/START_LOADING';
 const FINISH_LOADING = 'loading/FINISH_LOADING';
@@ -23,3 +24,5 @@ const loading = handleActions(
 );
 
 export default loading;
+
+export type RootState = ReturnType<typeof rootReducer>;

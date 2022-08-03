@@ -3,16 +3,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import StatFindBox from '../components/stat/StatFindBox';
 import StatResultBox from '../components/stat/StatResultBox';
 import { findUrl, unloadFind } from '../modules/stat';
-import { RootState } from '../modules/stat';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 const StatContainer = () => {
   const [error, setError] = useState<string | null>(null);
   const [findInput, setFindInput] = useState<string>('');
   const dispatch = useDispatch();
-  const { stat, statError } = useSelector(({ stat }: RootState) => ({
-    stat: stat.stat,
-    statError: stat.statError,
-  }));
+  const { stat, statError, loading } = useSelector(
+    ({ stat, loading }: { stat: any; loading: any }) => ({
+      stat: stat.stat,
+      statError: stat.statError,
+      loading: loading['stat/FIND_URL'],
+    }),
+  );
 
   const onFind = useCallback(() => {
     if (findInput === '') {
@@ -43,12 +47,29 @@ const StatContainer = () => {
     };
   }, [dispatch]);
 
+  // stat이 있을 경우 error값에 null 대입
+  useEffect(() => {
+    if (stat) {
+      setError(null);
+    }
+  }, [stat]);
+
   // statError 처리
   useEffect(() => {
     if (statError?.response.status === 404) {
       setError('Error: Invalid shortCode');
     }
   }, [statError]);
+
+  // 로딩처리
+  useEffect(() => {
+    NProgress.configure({ showSpinner: false });
+    if (loading) {
+      NProgress.start();
+    } else {
+      NProgress.done();
+    }
+  }, [loading]);
 
   return (
     <>

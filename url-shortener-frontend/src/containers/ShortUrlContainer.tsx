@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import UrlCreateBox from '../components/url/UrlCreateBox';
 import UrlResultBox from '../components/url/UrlResultBox';
 import { createUrl, unloadUrl } from '../modules/url';
-import { RootState } from '../modules/url';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 const ShortUrlContainer = () => {
   const [error, setError] = useState<string | null>(null);
@@ -13,10 +14,13 @@ const ShortUrlContainer = () => {
     copied: false,
   });
   const dispatch = useDispatch();
-  const { shortUrl, shortUrlError } = useSelector(({ url }: RootState) => ({
-    shortUrl: url.shortUrl,
-    shortUrlError: url.shortUrlError,
-  }));
+  const { shortUrl, shortUrlError, loading } = useSelector(
+    ({ url, loading }: { url: any; loading: any }) => ({
+      shortUrl: url.shortUrl,
+      shortUrlError: url.shortUrlError,
+      loading: loading['url/CREATE_URL'],
+    }),
+  );
 
   const onShorten = useCallback(() => {
     if (urlInput === '') {
@@ -71,6 +75,16 @@ const ShortUrlContainer = () => {
       setError('Error: Invalid url');
     }
   }, [shortUrlError]);
+
+  // 로딩처리
+  useEffect(() => {
+    NProgress.configure({ showSpinner: false });
+    if (loading) {
+      NProgress.start();
+    } else {
+      NProgress.done();
+    }
+  }, [loading]);
 
   return (
     <>
