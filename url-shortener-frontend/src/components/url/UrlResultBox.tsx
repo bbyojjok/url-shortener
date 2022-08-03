@@ -71,7 +71,7 @@ type UrlResultBoxProps = {
   onCopy?: () => void;
 };
 
-const UrlResultBox: React.FC<UrlResultBoxProps> = ({ shortUrl, copyShortUrl, onCopy }) => {
+const UrlResultBox = ({ shortUrl, copyShortUrl, onCopy }: UrlResultBoxProps) => {
   return (
     <UrlResultBoxBlock>
       <a

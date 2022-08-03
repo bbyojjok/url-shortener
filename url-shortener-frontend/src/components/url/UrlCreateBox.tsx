@@ -13,13 +13,7 @@ type UrlCreateBoxProps = {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onShorten?: () => void;
 };
-const UrlCreateBox: React.FC<UrlCreateBoxProps> = ({
-  error,
-  urlInput,
-  onChange,
-  onKeyDown,
-  onShorten,
-}) => {
+const UrlCreateBox = ({ error, urlInput, onChange, onKeyDown, onShorten }: UrlCreateBoxProps) => {
   return (
     <>
       <InputBox

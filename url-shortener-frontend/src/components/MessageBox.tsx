@@ -16,7 +16,7 @@ const MessageBoxBlock = styled.div`
   }
 `;
 
-const MessageBox: React.FC<MessageBoxProps> = ({ children }) => {
+const MessageBox = ({ children }: MessageBoxProps) => {
   return <MessageBoxBlock>{children}</MessageBoxBlock>;
 };
 

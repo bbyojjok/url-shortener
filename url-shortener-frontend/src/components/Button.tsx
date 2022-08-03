@@ -48,7 +48,7 @@ type ButtonProps = {
   onClick?: () => void;
 };
 
-const Button: React.FC<ButtonProps> = (props) => {
+const Button = (props: ButtonProps) => {
   return props.to ? (
     <StyledLink to={props.to}>{props.children}</StyledLink>
   ) : (

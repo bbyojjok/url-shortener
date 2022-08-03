@@ -46,12 +46,7 @@ type StatResultBoxProps = {
   originalUrl: string;
 };
 
-const StatResultBox: React.FC<StatResultBoxProps> = ({
-  createdAt,
-  count,
-  shortUrl,
-  originalUrl,
-}) => {
+const StatResultBox = ({ createdAt, count, shortUrl, originalUrl }: StatResultBoxProps) => {
   return (
     <StatResultBoxBlock>
       <table>

@@ -12,7 +12,7 @@ const WrapperBlock = styled.div`
   padding: 20px 20px 40px;
 `;
 
-const Wrapper: React.FC<WrapperProps> = ({ children }) => {
+const Wrapper = ({ children }: WrapperProps) => {
   return <WrapperBlock>{children}</WrapperBlock>;
 };
 

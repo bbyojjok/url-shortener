@@ -48,14 +48,7 @@ type InputBoxProps = {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
-const InputBox: React.FC<InputBoxProps> = ({
-  error,
-  value,
-  placeholder,
-  inline,
-  onChange,
-  onKeyDown,
-}) => {
+const InputBox = ({ error, value, placeholder, inline, onChange, onKeyDown }: InputBoxProps) => {
   return (
     <>
       <InputBlock className={`${error && 'error'}`} inline={inline}>

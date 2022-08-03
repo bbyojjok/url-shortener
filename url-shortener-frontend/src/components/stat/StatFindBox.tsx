@@ -22,13 +22,7 @@ type StatFindBoxProps = {
   onFind?: () => void;
 };
 
-const StatFindBox: React.FC<StatFindBoxProps> = ({
-  error,
-  findInput,
-  onChange,
-  onKeyDown,
-  onFind,
-}) => {
+const StatFindBox = ({ error, findInput, onChange, onKeyDown, onFind }: StatFindBoxProps) => {
   return (
     <StatFindBoxBlock>
       <div>
