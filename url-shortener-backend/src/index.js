@@ -4,6 +4,9 @@ import Koa from 'koa';
 import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 import mongoose from 'mongoose';
+import helmet from 'koa-helmet';
+import compress from 'koa-compress';
+import zlib from 'zlib';
 import path from 'path';
 import send from 'koa-send';
 import serve from 'koa-static';
@@ -27,6 +30,23 @@ const __dirname = path.resolve();
 const buildDirectory = path.resolve(
   __dirname,
   '../url-shortener-frontend/build',
+);
+
+// 미들웨어 연결
+app.use(helmet());
+app.use(
+  compress({
+    filter(content_type) {
+      return /text/i.test(content_type);
+    },
+    threshold: 2048,
+    gzip: {
+      flush: zlib.constants.Z_SYNC_FLUSH,
+    },
+    deflate: {
+      flush: zlib.constants.Z_SYNC_FLUSH,
+    },
+  }),
 );
 
 // 라우트 적용 전에 bodyParser 적용
