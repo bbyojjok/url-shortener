@@ -160,7 +160,7 @@ const Docs = () => {
             <tbody>
               <tr>
                 <td>
-                  <span className="location">{domainUrl}</span>/api/create
+                  <span className="location">{domainUrl}</span>/api/url
                 </td>
                 <td>Create shorten url</td>
               </tr>

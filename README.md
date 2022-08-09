@@ -18,5 +18,3 @@
   - redux-saga
   - styled-components
   - typescript
-
-## setup
