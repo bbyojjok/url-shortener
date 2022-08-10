@@ -79,7 +79,8 @@ export const read = async (ctx) => {
     try {
       const queryResult = await Url.find({})
         .sort(sort)
-        .limit(parseInt(limit, 10) || 10);
+        .limit(parseInt(limit, 10) || 10)
+        .exec();
       if (!queryResult) {
         ctx.status = 404;
         return;
