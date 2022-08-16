@@ -134,7 +134,7 @@ const Docs = () => {
                 <td>limit</td>
                 <td>X</td>
                 <td>Integer</td>
-                <td>40</td>
+                <td>20</td>
                 <td>The limit of results per page that has been set</td>
               </tr>
             </tbody>

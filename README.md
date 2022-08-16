@@ -1,20 +1,19 @@
-# url-shortener
+# Url-shortener
 
-단축 url 만들기
+단축 url 생성하기
 
-## tech stack
+## Tech stack
 
-- **backend**
+- **Backend**
 
-  - node js
-  - koa
-  - mongodb
+  - Node.js
+  - Koa
+  - Mongodb
 
-- **frontend**
+- **Frontend**
 
-  - react
-  - react router v6
-  - redux
-  - redux-saga
-  - styled-components
-  - typescript
+  - React
+  - React Router v6
+  - Redux
+  - Styled Components
+  - TypeScript
