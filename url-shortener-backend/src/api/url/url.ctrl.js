@@ -12,6 +12,8 @@ POST /api/url
 export const create = async (ctx) => {
   const { originalUrl } = ctx.request.body;
 
+  console.log('ctx.request.header:', ctx.request.header);
+
   // validation
   const schema = Joi.object().keys({
     originalUrl: Joi.string().uri().required(),
