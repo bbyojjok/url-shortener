@@ -12,8 +12,6 @@ POST /api/url
 export const create = async (ctx) => {
   const { originalUrl } = ctx.request.body;
 
-  console.log('ctx.request.header:', ctx.request.header);
-
   // validation
   const schema = Joi.object().keys({
     originalUrl: Joi.string().uri().required(),
@@ -33,10 +31,9 @@ export const create = async (ctx) => {
     return;
   }
 
-  const shortBaseUrl = `${ctx.request.header.origin}/`;
-
-  console.log('ctx.request.header.origin:', ctx.request.header.origin);
-  console.log('ctx.request.origin:', ctx.request.origin);
+  // const shortBaseUrl = `${ctx.request.header.origin}/`;
+  const shortBaseUrl = `${ctx.request.header['x-forwarded-proto']}://${ctx.request.header.host}/`;
+  console.log('shortBaseUrl:', shortBaseUrl);
 
   const urlCode = nanoid(10);
   const shortUrl = existUrl
