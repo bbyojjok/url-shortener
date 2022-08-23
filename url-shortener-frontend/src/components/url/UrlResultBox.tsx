@@ -86,6 +86,7 @@ const UrlResultBox = ({ shortUrl, copyShortUrl, onCopy }: UrlResultBoxProps) => 
         <Button>Copy</Button>
       </CopyToClipboard>
       <div className="qr-code-box" dangerouslySetInnerHTML={{ __html: shortUrl.qrCode }}></div>
+      <Button to={`/stat/${shortUrl.urlCode}`}>Go Stat</Button>
     </UrlResultBoxBlock>
   );
 };

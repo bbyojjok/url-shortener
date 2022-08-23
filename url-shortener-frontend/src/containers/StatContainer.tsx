@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import StatFindBox from '../components/stat/StatFindBox';
 import StatResultBox from '../components/stat/StatResultBox';
 import { findUrl, unloadFind } from '../modules/stat';
@@ -7,6 +8,7 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
 const StatContainer = () => {
+  const { code } = useParams<string>();
   const [error, setError] = useState<string | null>(null);
   const [findInput, setFindInput] = useState<string>('');
   const dispatch = useDispatch();
@@ -70,6 +72,13 @@ const StatContainer = () => {
       NProgress.done();
     }
   }, [loading]);
+
+  useEffect(() => {
+    if (code) {
+      setFindInput(code);
+      dispatch(findUrl(code));
+    }
+  }, [code, dispatch]);
 
   return (
     <>

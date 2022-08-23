@@ -20,7 +20,9 @@ function App() {
         <CSSTransition key={location.pathname} timeout={200} classNames="page">
           <Routes location={location}>
             <Route path="/" element={<ShortUrlPage />} />
-            <Route path="/stat" element={<StatPage />} />
+            <Route path="/stat/" element={<StatPage />}>
+              <Route path=":code" element={<StatPage />} />
+            </Route>
             <Route path="/docs" element={<DocsPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

@@ -61,11 +61,13 @@ app.use(router.routes()).use(router.allowedMethods());
 // 정적파일 위치 지정
 app.use(serve(buildDirectory));
 app.use(async (ctx) => {
+  console.log(ctx.path);
+
   // Not Found이고, 주소가 /api/url로 시작하지 않거나, /stat /docs /error 일 경우
   if (
     ctx.status === 404 &&
     (ctx.path.indexOf('/api/url') === 0 ||
-      ctx.path === '/stat' ||
+      ctx.path.indexOf('/stat') === 0 ||
       ctx.path === '/docs' ||
       ctx.path === '/error')
   ) {

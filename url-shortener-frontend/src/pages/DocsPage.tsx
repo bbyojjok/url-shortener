@@ -18,7 +18,7 @@ const DocsPage = () => {
       </Helmet>
       <Docs />
       <ButtonBoxBlock>
-        <Button to="/">Go url-shortener</Button>
+        <Button to="/">Go Url-Shortener</Button>
       </ButtonBoxBlock>
     </Wrapper>
   );
