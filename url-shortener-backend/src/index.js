@@ -6,7 +6,6 @@ import bodyParser from 'koa-bodyparser';
 import mongoose from 'mongoose';
 import helmet from 'koa-helmet';
 import compress from 'koa-compress';
-import cors from '@koa/cors';
 import zlib from 'zlib';
 import path from 'path';
 import send from 'koa-send';
@@ -34,7 +33,6 @@ const buildDirectory = path.resolve(
 );
 
 // 미들웨어 연결
-app.use(cors());
 app.use(helmet());
 app.use(
   compress({
