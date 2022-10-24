@@ -15,5 +15,6 @@
   - React
   - React Router v6
   - Redux
+  - Redux-Saga
   - Styled Components
   - TypeScript
